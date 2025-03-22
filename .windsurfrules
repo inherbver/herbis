@@ -1,0 +1,97 @@
+1. General Code Style & Formatting
+Style Guide: Follow the Airbnb Style Guide for consistent code formatting.
+
+Naming Conventions: Use PascalCase for React component file names (e.g., UserCard.tsx instead of user-card.tsx).
+
+Exports: Prefer named exports for components to promote clarity.
+
+Environment Creation: Separate configurations and code paths must be maintained for both production and development environments.
+
+2. Project Structure & Architecture
+Next.js Patterns: Use Next.js with the App Router and correctly differentiate between server and client components.
+
+Backend Integration: Maintain Supabase as the backend with an Express.js intermediary for authentication.
+
+Code Organization:
+
+Components: Place reusable components under src/components/
+
+Contexts: Manage global state with React Context API in src/contexts/
+
+Services: Centralize API and data fetching logic under src/services/api/
+
+Styles: Keep Tailwind CSS as the primary styling solution, and extend with custom styles only with prior approval.
+
+File/Folder Creation: New files or directories should only be created after obtaining user approval.
+
+3. Styling & UI
+Tailwind CSS: Use Tailwind CSS for all styling. Avoid unnecessary custom CSS files unless absolutely required.
+
+UI Libraries: Use Shadcn UI for pre-built components.
+
+Semantic Markup: Minimize excessive <div> nesting. Use semantic HTML5 elements wherever possible.
+
+Responsive Design: Ensure all components are responsive and accessible.
+
+4. Data Fetching & Forms
+Data Fetching: Use TanStack Query (react-query) for robust and efficient data fetching.
+
+Form Handling: Use React Hook Form for handling forms.
+
+Validation: Use Zod for schema validation to ensure data integrity.
+
+5. State Management & Logic
+React Context: Use React Context API to manage shared state (e.g., authentication, admin mode).
+
+Compound Components: Where applicable, implement compound components to keep related UI parts together while sharing state.
+
+Custom Hooks: Encapsulate business logic and data fetching in custom hooks (e.g., useAdminActions, usePermissions).
+
+6. Backend & Database
+Database Access: Use Prisma for interacting with the Supabase PostgreSQL database.
+
+Data Conversion: Centralize conversion functions between camelCase (frontend) and snake_case (database) in utilities.
+
+Security Policies: Ensure robust Row Level Security (RLS) policies are in place on Supabase.
+
+7. Security & Performance
+Authentication: Use an Express.js intermediary to securely manage authentication with Supabase Auth.
+
+Cookies: Utilize HTTP-only cookies for authentication tokens.
+
+Rate Limiting & Helmet: Implement express-rate-limit and helmet on the backend for enhanced security.
+
+Performance Optimization:
+
+Optimize asset loading with lazy loading, image optimization, and code splitting.
+
+Use caching where applicable.
+
+Error Handling: Centralize error logging using tools like Winston on the backend and Error Boundaries on the frontend.
+
+8. Testing & Quality Assurance
+Unit & Integration Testing: Implement tests using Jest and Testing Library for critical functionality.
+
+Linting & Formatting: Use ESLint and Prettier to maintain code quality and consistency.
+
+CI/CD: Set up continuous integration and deployment pipelines to automate testing and deployment.
+
+9. Accessibility & SEO
+Accessibility: Follow WCAG guidelines; ensure all pages use semantic HTML.
+
+SEO: Ensure code is SEO-friendly by using proper meta tags, structured data, and server-side rendering when possible.
+
+10. Iterative Development Process
+User Approval for Changes:
+
+When the user types "go" in the chat, it indicates full approval for the complete development of the proposed changes.
+
+When the user types "go slowly," it means the changes should be broken down into logical steps, with user validation at each stage.
+
+No Unilateral Changes: The user’s approval is only valid for the current validated proposals. Any new development suggestions must be approved by the user before implementation.
+
+Production & Development Environment Setup
+Production Environment: Configure environment variables, secure cookies, and proper logging. Deploy the Next.js frontend (on Vercel or Netlify) and the Express.js authentication server (on Render) with separate configurations.
+
+Development Environment: Use local environment variables for testing and development. Ensure the code path for development is isolated from production, using tools like env-cmd for different configurations.
+
