@@ -69,6 +69,56 @@ inherbisveritas/
 └── .env.local                # Variables d'environnement locales
 ```
 
+## Palette de couleurs
+
+inHerbisVeritas utilise une palette de couleurs méditerranéenne distinctive qui renforce l'identité visuelle du site :
+
+```
+Palette principale :
+├── Blanc calcaire (#F2F2EF)  # Fond principal, surfaces
+├── Bleu Méditerranée (#4A90E2)  # Boutons, éléments interactifs
+├── Vert olive (#808F4D)  # Logo, navigation active, validations
+├── Ocre provençal (#D98E04)  # Bordures, sous-titres, textes secondaires
+└── Lavande douce (#A58FAA)  # Éléments décoratifs, effets de survol
+```
+
+### Typographie
+
+Le site utilise deux polices complémentaires :
+- **Cinzel** : Police serif élégante utilisée pour les titres et éléments d'importance
+- **Raleway** : Police sans-serif moderne et lisible pour le corps du texte
+
+Ces polices sont importées via Next.js (`next/font/google`) dans `layout.tsx` et configurées globalement dans `globals.css`.
+
+### Utilisation
+
+Les couleurs sont disponibles via :
+
+1. **Variables CSS** définies dans `globals.css`
+   ```css
+   --calcaire: 60 11% 94%;       /* #F2F2EF */
+   --mediterranee: 213 73% 59%;  /* #4A90E2 */
+   --olive: 73 30% 43%;          /* #808F4D */
+   --ocre: 39 96% 43%;           /* #D98E04 */
+   --lavande: 281 17% 62%;       /* #A58FAA */
+   ```
+
+2. **Classes Tailwind** configurées dans `tailwind.config.js`
+   ```jsx
+   // Exemples d'utilisation
+   <div className="bg-calcaire">Fond principal</div>
+   <button className="bg-mediterranee text-white">Bouton principal</button>
+   <span className="text-olive">Texte validé</span>
+   <h2 className="text-ocre">Sous-titre</h2>
+   <div className="hover:text-lavande">Élément avec effet de survol</div>
+   ```
+
+3. **Classes d'utilitaires** pour les composants communs
+   ```css
+   .btn-primary { /* Utilise la couleur bleu Méditerranée */ }
+   .nav-link-active { /* Utilise la couleur vert olive */ }
+   ```
+
 ## Pages et fonctionnalités
 
 - **Page d'accueil** : Boutique avec produits et filtres
@@ -120,4 +170,4 @@ flowchart TD
     ProductIdPage@{ shape: rect}
 ```
 
-[Visualiser ce diagramme dans Mermaid Live Editor](https://mermaid.live/edit#pako:eNqtlE1vgzAMhv-KlROV2M4HlbZLs1PVXXbYuS0HD7ipJCgoqaYh_vvMOqAdh6nqBY4TJ_Zrx3H3TAuSQRrzkgxFYa_HrGAxl1w-CCbcljKPJ3pDSNE2KCFmQ_zOGT8YK9BDk5eVVRyAMvnbYVRs4aRyJ5iy0shQPk3ZPM1VjJDIRQqWFIzdyoKL1wPZnXIRH3pJDg7U37G5HYDHFqpBJ0sQmvMJQ7K9fV3fPez9kfP_pSNzI15qJa_8o-qfVNSy_F3mJRkbwGSo4RIW6w0skTlKYzCQ5jvP2-5i6tCFi2yxQtDOBrGDLdMKtsrPbIVxmZCmdrWAFWk6ByhIgvbaSEPaZE09R8a8nDQVPJtkDfO08KkrtFHqEX7aLVIoXI3RdH4tRu8jKh_HqXXMjdVgHQRtq2aYHwYzPLe7nqk7pM2gblB2_aqRjZjcC0XZF4x5Uu0)
+Visualisez ce diagramme dans Mermaid Live Editor: https://mermaid.live/

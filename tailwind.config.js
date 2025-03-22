@@ -15,7 +15,22 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        cinzel: ['var(--font-cinzel)'],
+        raleway: ['var(--font-raleway)'],
+        sans: ['var(--font-raleway)'],
+      },
       colors: {
+        /* Couleurs méditerranéennes */
+        calcaire: "hsl(var(--calcaire))",
+        mediterranee: "hsl(var(--mediterranee))",
+        olive: "hsl(var(--olive))",
+        ocre: "hsl(var(--ocre))",
+        lavande: "hsl(var(--lavande))",
+        decorative: "hsl(var(--decorative))",
+        hover: "hsl(var(--hover))",
+        
+        /* Couleurs sémantiques */
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
