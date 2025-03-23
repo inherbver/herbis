@@ -77,7 +77,13 @@ tests/
   ├── navbar.test.tsx               # Tests pour le composant ComposedNavbar
   ├── navbar-mobile-menu.test.tsx   # Tests pour le composant NavbarMobileMenu
   ├── footer.test.tsx               # Tests pour le composant ComposedFooter
-  └── footer-components.test.tsx    # Tests individuels pour les composants du Footer
+  ├── footer-components.test.tsx    # Tests individuels pour les composants du Footer
+  ├── contact-header.test.tsx       # Tests pour le composant ContactHeader
+  ├── contact-cards.test.tsx        # Tests pour le composant ContactCards
+  ├── contact-social.test.tsx       # Tests pour le composant ContactSocial
+  ├── contact-faq.test.tsx          # Tests pour le composant ContactFAQ
+  ├── contact-cta.test.tsx          # Tests pour le composant ContactCTA
+  └── contact-page.test.tsx         # Tests pour la page de contact
 ```
 
 ### Composants testés
@@ -106,6 +112,13 @@ tests/
 - `ProductCardActions` - Le composant pour les boutons d'action (ajouter au panier)
 - `ProductCardCategory` - Le composant pour afficher la catégorie du produit
 - `ComposedProductCard` - Le composant client qui assemble tous les sous-composants
+
+#### Contact
+- `ContactHeader` - L'en-tête de la page contact avec titre et description
+- `ContactCards` - Les cartes d'informations de contact (téléphone, email, adresse)
+- `ContactSocial` - Les liens vers les réseaux sociaux
+- `ContactFAQ` - Le composant d'accordéon pour les questions fréquentes
+- `ContactCTA` - Le call-to-action pour diriger les utilisateurs vers la boutique ou les articles
 
 ## Mocks
 
@@ -379,6 +392,59 @@ it('renders ProductCardActions with functional button', async () => {
 ```
 
 Ces tests garantissent que les composants ProductCard fonctionnent correctement de manière isolée et composée, validant ainsi le pattern de composants composables.
+
+## Tests des composants de contact
+
+### Structure des tests Contact
+
+```
+tests/
+  ├── contact-header.test.tsx       # Tests pour le composant ContactHeader
+  ├── contact-cards.test.tsx        # Tests pour le composant ContactCards
+  ├── contact-social.test.tsx       # Tests pour le composant ContactSocial
+  ├── contact-faq.test.tsx          # Tests pour le composant ContactFAQ
+  ├── contact-cta.test.tsx          # Tests pour le composant ContactCTA
+  └── contact-page.test.tsx         # Tests pour la page de contact
+```
+
+### Comportements testés
+
+- Affichage correct des informations de contact
+- Fonctionnement correct des liens de contact
+- Affichage correct des réseaux sociaux
+- Fonctionnement correct de l'accordéon des questions fréquentes
+- Affichage correct du call-to-action
+
+### Technique de test
+
+Les tests utilisent une approche modulaire où les composants sont testés individuellement puis dans leur version composée. Des mocks sont utilisés pour :
+- Simuler les données de contact
+- Simuler les fonctions de callback comme `handleClick`
+
+Exemple de test pour les composants Contact :
+
+```tsx
+// Test du composant ContactHeader
+it('renders with contact information', () => {
+  render(<ContactHeader />);
+  
+  expect(screen.getByText('Contactez-nous')).toBeInTheDocument();
+  expect(screen.getByText('Adresse')).toBeInTheDocument();
+  expect(screen.getByText('Téléphone')).toBeInTheDocument();
+  expect(screen.getByText('Email')).toBeInTheDocument();
+});
+
+// Test du composant ContactCards
+it('renders with contact cards', () => {
+  render(<ContactCards />);
+  
+  expect(screen.getByText('Card 1')).toBeInTheDocument();
+  expect(screen.getByText('Card 2')).toBeInTheDocument();
+  expect(screen.getByText('Card 3')).toBeInTheDocument();
+});
+```
+
+Ces tests garantissent que les composants de contact fonctionnent correctement de manière isolée et composée, validant ainsi le pattern de composants composables.
 
 ## Bonnes pratiques
 

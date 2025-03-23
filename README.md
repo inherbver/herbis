@@ -238,6 +238,35 @@ Version modulaire (pour des personnalisations avancées) :
 
 Cette flexibilité permet de répondre à différents besoins d'affichage tout en maintenant une apparence cohérente.
 
+## Composants
+
+### Layout
+- `Navbar` et sous-composants de navigation
+- `Footer` et sous-composants de pied de page
+
+### Shop
+- `ProductCard` et sous-composants pour l'affichage des produits
+- `ShopFilters` pour le filtrage des produits
+
+### Magazine
+- `ArticleCard` pour l'affichage des articles
+- `ArticleContent` pour le contenu des articles
+
+### Contact
+- `ContactHeader` - En-tête immersif pour la page contact
+- `ContactCards` - Cartes d'informations de contact (téléphone, email, adresse)
+- `ContactSocial` - Section de liens vers les réseaux sociaux
+- `ContactFAQ` - Accordéon pour les questions fréquentes
+- `ContactCTA` - Call-to-action pour rediriger vers la boutique ou les articles
+
+### UI
+Composants d'interface utilisateur réutilisables :
+
+- `Button` - Boutons personnalisables
+- `Card` - Conteneurs de type carte
+- `Accordion` - Panneaux déroulants pour les FAQ et autres contenus
+- Et plus encore...
+
 ## Tests
 
 Le projet utilise Jest et React Testing Library pour les tests unitaires des composants.
