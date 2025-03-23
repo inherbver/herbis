@@ -96,6 +96,17 @@ tests/
 - `FooterNewsletter` - Le composant pour le formulaire d'inscription à la newsletter
 - `FooterSocial` - Le composant pour les liens vers les réseaux sociaux
 
+#### ProductCard et sous-composants
+- `ProductCard` - Le composant de base qui fournit le contexte aux sous-composants
+- `ProductCardContext` - Le contexte partagé qui gère les données du produit
+- `ProductCardTitle` - Le composant pour afficher le titre du produit
+- `ProductCardDescription` - Le composant pour afficher la description du produit
+- `ProductCardPrice` - Le composant pour afficher le prix (normal et en promotion)
+- `ProductCardImage` - Le composant pour afficher l'image et les badges (nouveau, promotion)
+- `ProductCardActions` - Le composant pour les boutons d'action (ajouter au panier)
+- `ProductCardCategory` - Le composant pour afficher la catégorie du produit
+- `ComposedProductCard` - Le composant client qui assemble tous les sous-composants
+
 ## Mocks
 
 Pour isoler les composants pendant les tests, nous utilisons plusieurs types de mocks :
@@ -308,6 +319,67 @@ describe('FooterNewsletter', () => {
 });
 ```
 
+## Tests des cartes produits
+
+### Structure des tests ProductCard
+
+```
+tests/
+  ├── product-card.test.tsx             # Tests pour ProductCard et ses sous-composants
+  └── product-card-context.test.tsx     # Tests pour le contexte ProductCardContext
+```
+
+### Comportements testés
+
+Pour `ProductCardContext` :
+- Fournir correctement les données du produit aux composants enfants
+- Transmettre correctement la fonction d'ajout au panier
+- Gérer les produits avec et sans remises
+
+Pour `ProductCard` et ses sous-composants :
+- Affichage correct des informations du produit (titre, description, catégorie, etc.)
+- Calcul et affichage corrects des prix (normal et réduit)
+- Gestion correcte des badges "Nouveau" et "Promotion"
+- Réponse appropriée aux clics sur le bouton d'ajout au panier
+- Affichage correct des différentes variantes (default, horizontal)
+
+### Technique de test
+
+Les tests utilisent une approche modulaire où les composants sont testés individuellement puis dans leur version composée. Des mocks sont utilisés pour :
+- Simuler les images Next.js
+- Simuler les fonctions de callback comme `addToCart`
+
+Exemple de test pour les composants ProductCard :
+
+```tsx
+// Test du composant ComposedProductCard
+it('renders with product information', () => {
+  render(<ComposedProductCard product={mockProduct} />);
+  
+  expect(screen.getByText('Test Product')).toBeInTheDocument();
+  expect(screen.getByText('Test Category')).toBeInTheDocument();
+  expect(screen.getByTestId('next-image')).toBeInTheDocument();
+  expect(screen.getByRole('button')).toBeInTheDocument();
+});
+
+// Test du composant ProductCardActions avec callback
+it('renders ProductCardActions with functional button', async () => {
+  const handleAddToCart = jest.fn();
+  const user = userEvent.setup();
+  
+  render(
+    <ProductCard product={mockProduct} addToCart={handleAddToCart}>
+      <ProductCardActions />
+    </ProductCard>
+  );
+  
+  await user.click(screen.getByRole('button'));
+  expect(handleAddToCart).toHaveBeenCalledWith(mockProduct);
+});
+```
+
+Ces tests garantissent que les composants ProductCard fonctionnent correctement de manière isolée et composée, validant ainsi le pattern de composants composables.
+
 ## Bonnes pratiques
 
 1. **Isolation des tests** : Utilisez des mocks pour isoler le composant testé.
@@ -329,3 +401,32 @@ describe('FooterNewsletter', () => {
 - [Documentation de Jest](https://jestjs.io/docs/getting-started)
 - [Documentation de React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Documentation de user-event](https://testing-library.com/docs/user-event/intro)
+
+## Données de test
+
+Les données de test sont utilisées pour simuler les données réelles dans les tests. Elles peuvent être des objets, des tableaux ou des valeurs simples. Il est important de garder ces données de test séparées des données réelles pour éviter toute confusion ou contamination.
+
+```typescript
+// Exemple de données de test pour un produit
+const mockProduct = {
+  id: 1,
+  title: 'Test Product',
+  description: 'Description du produit',
+  price: 19.99,
+  category: 'Test Category',
+  image: '/path/to/image.jpg',
+};
+```
+
+Ces données de test peuvent être utilisées dans les tests pour simuler les données réelles et vérifier le comportement des composants.
+
+```tsx
+// Exemple d'utilisation des données de test dans un test
+it('renders with product information', () => {
+  render(<ComposedProductCard product={mockProduct} />);
+  
+  expect(screen.getByText('Test Product')).toBeInTheDocument();
+  expect(screen.getByText('Test Category')).toBeInTheDocument();
+  expect(screen.getByTestId('next-image')).toBeInTheDocument();
+  expect(screen.getByRole('button')).toBeInTheDocument();
+});

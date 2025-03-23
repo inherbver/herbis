@@ -176,6 +176,68 @@ const primaryColor = colors.semantic.primary.base;
 </button>
 ```
 
+## Composants et architecture
+
+### Pattern de composants composables
+
+inHerbisVeritas utilise un pattern de composants composables pour garantir la modularité, la réutilisabilité et la séparation des préoccupations. Ce pattern est particulièrement visible dans l'implémentation des cartes produits.
+
+#### Cartes produits refactorisées
+
+Les cartes produits suivent une architecture modulaire avec un système de composition :
+
+```
+/src/components/shared/ProductCard/
+├── ProductCard.tsx                # Composant de base (serveur)
+├── ProductCardActions.tsx         # Actions (client)
+├── ProductCardCategory.tsx        # Catégorie du produit
+├── ProductCardContext.tsx         # Contexte partagé
+├── ProductCardDescription.tsx     # Description du produit
+├── ProductCardImage.tsx           # Image avec badges
+├── ProductCardPrice.tsx           # Prix avec gestion des remises (client)
+├── ProductCardTitle.tsx           # Titre du produit
+├── ComposedProductCard.tsx        # Version composée (client)
+└── index.ts                       # Exports
+```
+
+Cette structure présente plusieurs avantages :
+
+1. **Évite les dépendances circulaires** grâce à des imports unidirectionnels
+2. **Sépare les composants client et serveur** selon les exigences de Next.js
+3. **Facilite la personnalisation** en permettant l'utilisation des sous-composants individuellement
+4. **Maintient la cohérence** via un contexte partagé qui évite le prop drilling
+
+#### Utilisation des cartes produits
+
+Version composée (recommandée pour la plupart des cas) :
+
+```tsx
+<ComposedProductCard 
+  product={product}
+  onAddToCart={handleAddToCart}
+  variant="default" // ou "horizontal"
+/>
+```
+
+Version modulaire (pour des personnalisations avancées) :
+
+```tsx
+<ProductCard product={product} addToCart={handleAddToCart}>
+  <ProductCardImage />
+  <div className="p-4">
+    <ProductCardCategory />
+    <ProductCardTitle />
+    <ProductCardDescription maxLines={2} />
+    <div className="mt-4 flex justify-between items-center">
+      <ProductCardPrice />
+      <ProductCardActions />
+    </div>
+  </div>
+</ProductCard>
+```
+
+Cette flexibilité permet de répondre à différents besoins d'affichage tout en maintenant une apparence cohérente.
+
 ## Tests
 
 Le projet utilise Jest et React Testing Library pour les tests unitaires des composants.

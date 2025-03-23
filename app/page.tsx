@@ -1,8 +1,5 @@
-"use client";
-
-import React from 'react';
-import { ShopContent } from '@/src/components/shop/ShopContent';
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  return <ShopContent />;
+  redirect('/shop');
 }
