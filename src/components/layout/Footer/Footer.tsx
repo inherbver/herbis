@@ -2,25 +2,28 @@
 
 import React from 'react';
 import { Bar } from '../Bar';
+import { cn } from '@/src/lib/utils';
 
 interface FooterProps {
   children: React.ReactNode;
   className?: string;
+  position?: 'bottom';
+  variant?: 'primary' | 'secondary';
 }
 
-export const Footer: React.FC<FooterProps> = ({
+export function Footer({
   children,
   className = '',
-}) => {
+  position = 'bottom',
+  variant = 'secondary',
+}: FooterProps) {
   return (
     <Bar 
-      position="bottom" 
-      variant="secondary" 
-      className={`mt-auto border-t border-border py-8 ${className}`}
+      position={position} 
+      variant={variant} 
+      className={cn(`mt-auto border-t border-border py-8`, className)}
     >
       {children}
     </Bar>
   );
-};
-
-export default Footer;
+}

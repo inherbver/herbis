@@ -176,6 +176,77 @@ const primaryColor = colors.semantic.primary.base;
 </button>
 ```
 
+## Tests
+
+Le projet utilise Jest et React Testing Library pour les tests unitaires des composants.
+
+### Exécution des tests
+
+```bash
+# Exécuter tous les tests
+npm test
+
+# Exécuter des tests spécifiques
+npm test -- tests/footer.test.tsx
+
+# Exécuter les tests avec un mode watch
+npm test -- --watch
+```
+
+### Structure des tests
+
+Les tests sont organisés dans le dossier `/tests` avec la convention de nommage `[component-name].test.tsx`.
+
+- **Composants atomiques** : Tests pour chaque composant individuel
+- **Composants composés** : Tests pour les composants assemblés comme `ComposedNavbar` et `ComposedFooter`
+
+### Méthodologie de test
+
+Les tests suivent une approche de *black box testing* qui se concentre sur le comportement observable des composants plutôt que sur leur implémentation interne. Cela inclut :
+
+1. **Rendu des éléments** : Vérification que les composants s'affichent correctement
+2. **Comportement interactif** : Tests des interactions utilisateur (clics, saisies)
+3. **Navigation** : Vérification des liens et routes
+4. **État des composants** : Tests de changement d'état (ex: formulaires)
+
+### Mocks
+
+Les tests utilisent des mocks pour isoler les composants de leurs dépendances :
+
+- **Hooks personnalisés** : Les hooks comme `useNavbar` et `useFooter` sont mockés
+- **Composants UI** : Les composants UI complexes sont simplifiés
+- **Icônes** : Les icônes sont remplacées par des div avec des data-testid
+- **Next.js** : Les fonctionnalités spécifiques à Next.js sont mockées
+
+## Composants de mise en page
+
+### Navbar
+
+Le composant Navbar a été implémenté avec une architecture modulaire :
+
+- **Navbar.tsx** : Composant de base utilisant Bar
+- **NavbarBrand.tsx** : Logo et identité de la marque
+- **NavbarLinks.tsx** : Liens de navigation principaux
+- **NavbarActions.tsx** : Actions comme panier et compte utilisateur
+- **NavbarMobileMenu.tsx** : Menu adaptatif pour mobile
+- **ComposedNavbar.tsx** : Assemblage des composants
+- **useNavbar.tsx** : Hook personnalisé pour la logique
+
+### Footer
+
+Le Footer suit la même architecture modulaire que la Navbar :
+
+- **Footer.tsx** : Composant de base utilisant Bar
+- **FooterBrand.tsx** : Logo et description de l'entreprise
+- **FooterLinks.tsx** : Liens de navigation organisés par catégories
+- **FooterLegal.tsx** : Informations légales et copyright
+- **FooterNewsletter.tsx** : Formulaire d'inscription à la newsletter
+- **FooterSocial.tsx** : Liens vers les réseaux sociaux
+- **ComposedFooter.tsx** : Assemblage des composants
+- **useFooter.tsx** : Hook personnalisé pour les données
+
+Cette architecture facilite la maintenance, les tests unitaires et permet une réutilisation des composants dans différents contextes.
+
 ## Pages et fonctionnalités
 
 - **Page d'accueil** : Boutique avec produits et filtres

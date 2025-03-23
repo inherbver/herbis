@@ -70,13 +70,31 @@ jest.mock('next/navigation', () => ({
 
 Les tests sont organisés dans le dossier `tests/` à la racine du projet. Nous suivons une convention de nommage où chaque fichier de test est nommé selon le composant testé avec le suffixe `.test.tsx`.
 
-### Exemple pour la Navbar
+### Exemples de fichiers de test
 
 ```
 tests/
-  ├── navbar.test.tsx           # Tests pour le composant ComposedNavbar
-  └── navbar-mobile-menu.test.tsx  # Tests pour le composant NavbarMobileMenu
+  ├── navbar.test.tsx               # Tests pour le composant ComposedNavbar
+  ├── navbar-mobile-menu.test.tsx   # Tests pour le composant NavbarMobileMenu
+  ├── footer.test.tsx               # Tests pour le composant ComposedFooter
+  └── footer-components.test.tsx    # Tests individuels pour les composants du Footer
 ```
+
+### Composants testés
+
+#### Navbar
+- `ComposedNavbar` - Le composant assemblé de la barre de navigation
+- `NavbarMobileMenu` - Le menu mobile de la navbar
+- Autres sous-composants
+
+#### Footer
+- `ComposedFooter` - Le composant assemblé du pied de page
+- `Footer` - Le composant de base
+- `FooterBrand` - Le composant pour le logo et la description de l'entreprise
+- `FooterLinks` - Le composant pour les liens organisés par catégories
+- `FooterLegal` - Le composant pour les informations légales et le copyright
+- `FooterNewsletter` - Le composant pour le formulaire d'inscription à la newsletter
+- `FooterSocial` - Le composant pour les liens vers les réseaux sociaux
 
 ## Mocks
 
@@ -97,6 +115,35 @@ jest.mock('@/src/components/layout/Navbar/useNavbar', () => ({
     isActive: (path: string) => path === '/',
     pathname: '/',
     cartCount: 0
+  })
+}));
+
+// Mock du hook useFooter
+jest.mock('@/src/components/layout/Footer/useFooter', () => ({
+  useFooter: () => ({
+    linkCategories: [
+      {
+        title: "Découvrir",
+        links: [
+          { href: "/about", label: "À propos" },
+          { href: "/shop", label: "Boutique" },
+        ]
+      },
+      {
+        title: "Informations",
+        links: [
+          { href: "/contact", label: "Contact" },
+          { href: "/faq", label: "FAQ" },
+        ]
+      }
+    ],
+    socialLinks: [
+      { href: "https://instagram.com/inherbisveritas", label: "Instagram", icon: "instagram" },
+      { href: "https://facebook.com/inherbisveritas", label: "Facebook", icon: "facebook" },
+    ],
+    isActive: (path: string) => path === '/about',
+    pathname: '/about',
+    copyrightText: ' 2025 InHerbisVeritas. Tous droits réservés.'
   })
 }));
 ```
@@ -201,6 +248,63 @@ test('devrait ouvrir le menu quand on clique sur le bouton', async () => {
   
   const sheet = screen.getByTestId('sheet');
   expect(sheet).toHaveAttribute('data-open', 'true');
+});
+```
+
+## Exemples de tests pour le Footer
+
+### 1. Test de rendu du composant assemblé
+
+```typescript
+// Dans footer.test.tsx
+describe('ComposedFooter', () => {
+  test('devrait afficher la marque du footer', () => {
+    render(<ComposedFooter />);
+    const brandElement = screen.getByText(/produits naturels/i);
+    expect(brandElement).toBeInTheDocument();
+  });
+
+  test('devrait afficher les catégories de liens et leurs liens', () => {
+    render(<ComposedFooter />);
+    
+    // Vérifie les titres de catégorie
+    const decouvrirTitle = screen.getByText('Découvrir');
+    const informationsTitle = screen.getByText('Informations');
+    
+    expect(decouvrirTitle).toBeInTheDocument();
+    expect(informationsTitle).toBeInTheDocument();
+    
+    // Vérifie les liens dans chaque catégorie
+    const aboutLink = screen.getByText('À propos');
+    const shopLink = screen.getByText('Boutique');
+    
+    expect(aboutLink).toBeInTheDocument();
+    expect(shopLink).toBeInTheDocument();
+  });
+});
+```
+
+### 2. Test des composants individuels
+
+```typescript
+// Dans footer-components.test.tsx
+describe('FooterNewsletter', () => {
+  test('devrait gérer le processus de soumission', async () => {
+    const user = userEvent.setup();
+    render(<FooterNewsletter />);
+    
+    const emailInput = screen.getByTestId('newsletter-input');
+    const subscribeButton = screen.getByRole('button', { name: /S'inscrire/i });
+    
+    // Remplit l'email
+    await user.type(emailInput, 'test@example.com');
+    
+    // Soumet le formulaire
+    await user.click(subscribeButton);
+    
+    // Vérifie que le bouton change d'état pendant la soumission
+    expect(screen.getByRole('button')).toHaveTextContent('Envoi...');
+  });
 });
 ```
 
