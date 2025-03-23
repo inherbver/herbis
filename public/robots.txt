@@ -1,0 +1,20 @@
+# robots.txt pour InHerbisVeritas
+# https://www.inherbisveritas.com/
+
+User-agent: *
+Allow: /
+
+# Interdire les pages d'administration
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+# Autoriser les robots principaux spécifiquement
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
+Sitemap: https://www.inherbisveritas.com/sitemap.xml
