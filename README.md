@@ -61,7 +61,12 @@ inherbisveritas/
 ├── src/
 │   ├── components/           # Composants réutilisables
 │   │   ├── ui/               # Composants UI de base (ShadCN)
-│   │   └── shop/             # Composants spécifiques à la boutique
+│   │   ├── shop/             # Composants spécifiques à la boutique
+│   │   ├── icons/            # Composants d'icônes SVG isolés
+│   │   └── layout/           # Composants de mise en page (NavBar, Footer)
+│   ├── styles/               # Système de design
+│   │   ├── tokens/           # Tokens de design (couleurs, typographie, espacement)
+│   │   └── theme/            # Configuration des thèmes et composants
 │   ├── contexts/             # Contextes React
 │   ├── hooks/                # Hooks personnalisés
 │   └── services/             # Services (API, authentification, etc.)
@@ -69,18 +74,74 @@ inherbisveritas/
 └── .env.local                # Variables d'environnement locales
 ```
 
+## Design System
+
+inHerbisVeritas implémente un design system cohérent avec une architecture modulaire basée sur des tokens de design. Cette approche garantit une expérience utilisateur consistante et facilite la maintenance.
+
+### Architecture du Design System
+
+```
+/src/styles
+├── /tokens              # Tokens de design atomiques
+│   ├── colors.ts        # Tokens de couleurs
+│   ├── typography.ts    # Tokens de typographie
+│   ├── spacing.ts       # Tokens d'espacement
+│   └── index.ts         # Export centralisé
+├── /theme
+│   ├── components.ts    # Styles spécifiques aux composants
+│   └── index.ts         # Export centralisé
+└── index.ts             # Point d'entrée principal
+```
+
+### Tokens de design sémantiques
+
+Les tokens de design sont nommés selon leur fonction (approche sémantique) plutôt que leur apparence :
+
+```typescript
+// Exemple simplifié des tokens de couleurs
+export const colors = {
+  // Couleurs primitives
+  palette: {
+    lightNeutral: '#F2F2EF',  // Ancien "calcaire"
+    primary500: '#4A90E2',    // Ancien "mediterranee"
+    accent500: '#808F4D',     // Ancien "olive"
+    // etc.
+  },
+  
+  // Couleurs sémantiques
+  semantic: {
+    background: 'var(--color-background)',
+    primary: {
+      base: 'var(--color-primary)',
+      hover: 'var(--color-primary-hover)',
+    },
+    accent: 'var(--color-accent)',
+    // etc.
+  }
+};
+```
+
 ## Palette de couleurs
 
-inHerbisVeritas utilise une palette de couleurs méditerranéenne distinctive qui renforce l'identité visuelle du site :
+inHerbisVeritas utilise une palette de couleurs méditerranéenne distinctive avec une nomenclature sémantique :
 
 ```
-Palette principale :
-├── Blanc calcaire (#F2F2EF)  # Fond principal, surfaces
-├── Bleu Méditerranée (#4A90E2)  # Boutons, éléments interactifs
-├── Vert olive (#808F4D)  # Logo, navigation active, validations
-├── Ocre provençal (#D98E04)  # Bordures, sous-titres, textes secondaires
-└── Lavande douce (#A58FAA)  # Éléments décoratifs, effets de survol
+Couleurs primitives :
+├── Neutral100 (#F2F2EF)   # Ancien "calcaire"
+├── Primary500 (#4A90E2)   # Ancien "mediterranee"
+├── Accent500 (#808F4D)    # Ancien "olive"
+├── Neutral500 (#D98E04)   # Ancien "ocre"
+└── Secondary500 (#A58FAA) # Ancien "lavande"
+
+Couleurs sémantiques :
+├── Background      # Fond principal
+├── Primary         # Couleur principale pour boutons, liens
+├── Accent          # Accents, éléments importants
+├── Secondary       # Éléments secondaires
+└── Border          # Bordures et séparateurs
 ```
+
+Les variables CSS correspondantes sont définies dans `globals.css` et accessibles via Tailwind CSS.
 
 ### Typographie
 
@@ -88,36 +149,32 @@ Le site utilise deux polices complémentaires :
 - **Cinzel** : Police serif élégante utilisée pour les titres et éléments d'importance
 - **Raleway** : Police sans-serif moderne et lisible pour le corps du texte
 
-Ces polices sont importées via Next.js (`next/font/google`) dans `layout.tsx` et configurées globalement dans `globals.css`.
+Ces polices sont importées via Next.js (`next/font/google`) dans `layout.tsx` et configurées globalement dans les tokens de typographie.
 
-### Utilisation
+### Développement de composants
 
-Les couleurs sont disponibles via :
+Les composants suivent le pattern de "compound components" lorsqu'ils sont complexes, et sont séparés en composants serveur et client grâce à des wrappers. Les composants d'icônes sont isolés pour optimiser les performances.
+
+### Utilisation du Design System
+
+Les tokens de design sont disponibles via :
 
 1. **Variables CSS** définies dans `globals.css`
-   ```css
-   --calcaire: 60 11% 94%;       /* #F2F2EF */
-   --mediterranee: 213 73% 59%;  /* #4A90E2 */
-   --olive: 73 30% 43%;          /* #808F4D */
-   --ocre: 39 96% 43%;           /* #D98E04 */
-   --lavande: 281 17% 62%;       /* #A58FAA */
-   ```
-
 2. **Classes Tailwind** configurées dans `tailwind.config.js`
-   ```jsx
-   // Exemples d'utilisation
-   <div className="bg-calcaire">Fond principal</div>
-   <button className="bg-mediterranee text-white">Bouton principal</button>
-   <span className="text-olive">Texte validé</span>
-   <h2 className="text-ocre">Sous-titre</h2>
-   <div className="hover:text-lavande">Élément avec effet de survol</div>
-   ```
+3. **API TypeScript** via l'import des tokens depuis `src/styles`
 
-3. **Classes d'utilitaires** pour les composants communs
-   ```css
-   .btn-primary { /* Utilise la couleur bleu Méditerranée */ }
-   .nav-link-active { /* Utilise la couleur vert olive */ }
-   ```
+Exemple d'utilisation des tokens dans un composant :
+```tsx
+import { colors, typography } from '@/styles';
+
+// Utilisation directe dans le code
+const primaryColor = colors.semantic.primary.base;
+
+// Utilisation avec les classes Tailwind
+<button className={`${colors.tailwind.primary.base} ${typography.tailwind.heading}`}>
+  Bouton principal
+</button>
+```
 
 ## Pages et fonctionnalités
 

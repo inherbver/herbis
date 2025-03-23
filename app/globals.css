@@ -4,31 +4,56 @@
 
 @layer base {
   :root {
-    /* Palette de couleurs méditerranéennes */
-    --calcaire: 60 11% 94%;       /* #F2F2EF - Fond principal */
-    --mediterranee: 213 73% 59%;  /* #4A90E2 - Boutons et interactions */
-    --olive: 73 30% 43%;          /* #808F4D - Logo, navigation, validation */
-    --ocre: 39 96% 43%;           /* #D98E04 - Bordures, textes secondaires */
-    --lavande: 281 17% 62%;       /* #A58FAA - Éléments décoratifs, hover */
+    /* Couleurs primitives (palette brute) */
+    --color-light-neutral: 60 11% 94%;    /* #F2F2EF - Ancien calcaire */
+    --color-blue: 213 73% 59%;            /* #4A90E2 - Ancien mediterranee */
+    --color-green: 73 30% 43%;            /* #808F4D - Ancien olive */
+    --color-amber: 39 96% 43%;            /* #D98E04 - Ancien ocre */
+    --color-purple: 281 17% 62%;          /* #A58FAA - Ancien lavande */
+    
+    /* Pour rétrocompatibilité - Ne pas utiliser dans les nouveaux composants */
+    --calcaire: var(--color-light-neutral);       
+    --mediterranee: var(--color-blue);  
+    --olive: var(--color-green);         
+    --ocre: var(--color-amber);           
+    --lavande: var(--color-purple);       
 
-    /* Variables sémantiques */
-    --background: var(--calcaire);
-    --foreground: 222.2 84% 4.9%;
+    /* Couleurs sémantiques (selon la fonction) */
+    --color-background: var(--color-light-neutral);
+    --color-primary: var(--color-blue);
+    --color-primary-hover: 213 73% 52%;
+    --color-primary-foreground: 0 0% 100%;
+    
+    --color-accent: var(--color-green);
+    --color-accent-hover: 73 30% 38%;
+    --color-accent-foreground: 0 0% 100%;
+    
+    --color-secondary: var(--color-purple);
+    --color-secondary-hover: 281 17% 55%;
+    --color-secondary-foreground: 0 0% 100%;
+    
+    --color-border: var(--color-amber);
+    --color-text-primary: 222.2 84% 4.9%;
+    --color-text-secondary: 215.4 16.3% 46.9%;
 
-    --card: var(--calcaire);
-    --card-foreground: 222.2 84% 4.9%;
+    /* Variables pour Shadcn UI et rétrocompatibilité */
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
 
-    --popover: var(--calcaire);
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: var(--color-background);
+    --card-foreground: var(--color-text-primary);
 
-    --primary: var(--mediterranee);
-    --primary-foreground: 0 0% 100%;
+    --popover: var(--color-background);
+    --popover-foreground: var(--color-text-primary);
 
-    --secondary: var(--ocre);
-    --secondary-foreground: 0 0% 100%;
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-primary-foreground);
 
-    --accent: var(--olive);
-    --accent-foreground: 0 0% 100%;
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-secondary-foreground);
+
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-accent-foreground);
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -36,34 +61,38 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: var(--ocre);
-    --input: var(--ocre);
-    --ring: var(--mediterranee);
+    --border: var(--color-border);
+    --input: var(--color-border);
+    --ring: var(--color-primary);
 
-    --decorative: var(--lavande);
-    --hover: var(--lavande);
+    --decorative: var(--color-secondary);
+    --hover: var(--color-secondary-hover);
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: var(--calcaire);
+    --color-background: 222.2 84% 4.9%;
+    --color-text-primary: var(--color-light-neutral);
+    
+    /* Variables pour Shadcn UI et rétrocompatibilité */
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
 
     --card: 222.2 84% 4.9%;
-    --card-foreground: var(--calcaire);
+    --card-foreground: var(--color-light-neutral);
 
     --popover: 222.2 84% 4.9%;
-    --popover-foreground: var(--calcaire);
+    --popover-foreground: var(--color-light-neutral);
 
-    --primary: var(--mediterranee);
-    --primary-foreground: 0 0% 100%;
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-primary-foreground);
 
-    --secondary: var(--ocre);
-    --secondary-foreground: 0 0% 100%;
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-secondary-foreground);
 
-    --accent: var(--olive);
-    --accent-foreground: 0 0% 100%;
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-accent-foreground);
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -71,12 +100,12 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: var(--ocre);
-    --input: var(--ocre);
-    --ring: var(--mediterranee);
+    --border: var(--color-border);
+    --input: var(--color-border);
+    --ring: var(--color-primary);
 
-    --decorative: var(--lavande);
-    --hover: var(--lavande);
+    --decorative: var(--color-secondary);
+    --hover: var(--color-secondary-hover);
   }
 }
 
@@ -95,11 +124,11 @@
 /* Styles personnalisés pour les éléments courants */
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white hover:bg-opacity-90 transition-colors;
+    @apply bg-primary text-primary-foreground hover:bg-opacity-90 transition-colors;
   }
 
   .btn-secondary {
-    @apply bg-accent text-white hover:bg-opacity-90 transition-colors;
+    @apply bg-accent text-accent-foreground hover:bg-opacity-90 transition-colors;
   }
 
   .nav-link {
@@ -119,14 +148,14 @@
   }
 
   .badge-new {
-    @apply badge bg-primary text-white;
+    @apply badge bg-primary text-primary-foreground;
   }
 
   .badge-special {
-    @apply badge bg-decorative text-white;
+    @apply badge bg-secondary text-secondary-foreground;
   }
 
   .text-secondary {
-    @apply text-secondary-foreground;
+    @apply text-text-secondary;
   }
 }

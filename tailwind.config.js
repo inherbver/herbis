@@ -5,6 +5,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     container: {
@@ -21,7 +22,43 @@ module.exports = {
         sans: ['var(--font-raleway)'],
       },
       colors: {
-        /* Couleurs méditerranéennes */
+        /* Couleurs primitives */
+        lightNeutral: "hsl(var(--color-light-neutral))",
+        blue: "hsl(var(--color-blue))",
+        green: "hsl(var(--color-green))",
+        amber: "hsl(var(--color-amber))",
+        purple: "hsl(var(--color-purple))",
+        
+        /* Couleurs sémantiques */
+        background: "hsl(var(--color-background))",
+        foreground: "hsl(var(--color-text-primary))",
+        
+        primary: {
+          DEFAULT: "hsl(var(--color-primary))",
+          hover: "hsl(var(--color-primary-hover))",
+          foreground: "hsl(var(--color-primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--color-secondary))",
+          hover: "hsl(var(--color-secondary-hover))",
+          foreground: "hsl(var(--color-secondary-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--color-accent))",
+          hover: "hsl(var(--color-accent-hover))",
+          foreground: "hsl(var(--color-accent-foreground))",
+        },
+        border: "hsl(var(--color-border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+
+        /* Classes de texte */
+        text: {
+          primary: "hsl(var(--color-text-primary))",
+          secondary: "hsl(var(--color-text-secondary))",
+        },
+        
+        /* Pour rétrocompatibilité - conserver ces noms */
         calcaire: "hsl(var(--calcaire))",
         mediterranee: "hsl(var(--mediterranee))",
         olive: "hsl(var(--olive))",
@@ -30,19 +67,14 @@ module.exports = {
         decorative: "hsl(var(--decorative))",
         hover: "hsl(var(--hover))",
         
-        /* Couleurs sémantiques */
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        /* Couleurs pour Shadcn UI */
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -51,18 +83,6 @@ module.exports = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
         },
       },
       borderRadius: {
