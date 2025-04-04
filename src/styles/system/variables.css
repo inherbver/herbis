@@ -1,0 +1,135 @@
+/**
+ * Variables CSS générées à partir des tokens de design
+ * Ce fichier contient les variables CSS générées à partir des tokens définis dans primitives.ts et semantic.ts
+ */
+
+:root {
+  /* =========================================
+   * PALETTE PRIMITIVE - valeurs HSL directes
+   * ========================================= */
+  --neutral-100: 60 11% 94%;      /* Ancien "calcaire" - #F2F2EF */
+  --neutral-200: 210 11% 85%;     /* Gris clair */
+  --neutral-300: 210 11% 70%;     /* Gris moyen */
+  --neutral-600: 210 11% 30%;     /* Gris foncé */
+  --neutral-900: 210 11% 15%;     /* Presque noir */
+  
+  --blue-300: 213 73% 70%;        /* Bleu clair */
+  --blue-500: 213 73% 59%;        /* Ancien "bleuMed" - #4A90E2 */
+  --blue-700: 213 73% 45%;        /* Bleu foncé */
+  
+  --purple-300: 281 17% 72%;      /* Lavande clair */
+  --purple-400: 281 17% 62%;      /* Ancien "lavande" - #A58FAA */
+  --purple-600: 281 17% 52%;      /* Lavande foncé */
+  
+  --green-400: 73 30% 53%;        /* Vert olive clair */
+  --green-600: 73 30% 43%;        /* Ancien "olive" - #808F4D */
+  --green-800: 73 30% 33%;        /* Vert olive foncé */
+  
+  --amber-400: 39 96% 53%;        /* Ocre clair */
+  --amber-500: 39 96% 43%;        /* Ancien "ocre" - #D98E04 */
+  --amber-600: 39 96% 33%;        /* Ocre foncé */
+  
+  --success-500: 120 50% 40%;     /* Vert succès */
+  --error-500: 0 84% 60%;         /* Rouge erreur */
+  --warning-400: 30 84% 60%;      /* Orange avertissement */
+  --info-500: 200 84% 60%;        /* Bleu information */
+  
+  --white: 0 0% 100%;
+  --black: 0 0% 0%;
+
+  /* =========================================
+   * COULEURS SÉMANTIQUES - interface utilisateur
+   * ========================================= */
+  --background: var(--neutral-100);
+  --foreground: var(--neutral-900);
+  --card: var(--white);
+  --card-foreground: var(--neutral-900);
+  
+  /* Couleurs primaires */
+  --primary: var(--blue-500);
+  --primary-foreground: var(--white);
+  --primary-hover: var(--blue-700);
+  --primary-active: var(--blue-700);
+  --primary-light: var(--blue-300);
+  
+  /* Couleurs secondaires */
+  --secondary: var(--purple-400);
+  --secondary-foreground: var(--white);
+  --secondary-hover: var(--purple-600);
+  --secondary-active: var(--purple-600);
+  --secondary-light: var(--purple-300);
+  
+  /* Couleurs d'accent */
+  --accent: var(--green-600);
+  --accent-foreground: var(--white);
+  --accent-hover: var(--green-800);
+  --accent-active: var(--green-800);
+  --accent-light: var(--green-400);
+  
+  /* Couleurs fonctionnelles */
+  --success: var(--success-500);
+  --error: var(--error-500);
+  --warning: var(--amber-500);
+  --info: var(--info-500);
+  
+  /* Couleurs de bordure */
+  --border: var(--neutral-200);
+  --border-hover: var(--neutral-300);
+  
+  /* Couleurs de texte */
+  --text: var(--neutral-900);
+  --text-subtle: var(--neutral-600);
+  --text-disabled: var(--neutral-300);
+  
+  /* Couleurs d'état */
+  --hover: var(--neutral-200);
+  --active: var(--neutral-300);
+  --disabled: var(--neutral-200);
+  --disabled-foreground: var(--neutral-600);
+  
+  /* Couleurs de focus */
+  --focus: var(--blue-500);
+  --focus-ring: var(--blue-300);
+  
+  /* =========================================
+   * COMPOSANTS SPÉCIFIQUES - définition explicite
+   * ========================================= */
+  --navigation: var(--secondary);
+  --navigation-foreground: var(--secondary-foreground);
+  
+  --footer: var(--secondary);
+  --footer-foreground: var(--secondary-foreground);
+  
+  --button-primary: var(--primary);
+  --button-primary-foreground: var(--primary-foreground);
+  
+  --button-secondary: var(--secondary);
+  --button-secondary-foreground: var(--secondary-foreground);
+  
+  --button-accent: var(--accent);
+  --button-accent-foreground: var(--accent-foreground);
+}
+
+/* Mode sombre - préparation des variables pour un futur thème sombre */
+.dark {
+  --background: 210 11% 15%;
+  --foreground: 60 11% 94%;
+  
+  --card: 210 11% 20%;
+  --card-foreground: 60 11% 94%;
+  
+  --primary: 213 73% 59%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 281 17% 62%;
+  --secondary-foreground: 0 0% 100%;
+  
+  --accent: 73 30% 43%;
+  --accent-foreground: 0 0% 100%;
+  
+  --border: 210 11% 30%;
+  --border-hover: 210 11% 40%;
+  
+  --text: 60 11% 94%;
+  --text-subtle: 210 11% 70%;
+}

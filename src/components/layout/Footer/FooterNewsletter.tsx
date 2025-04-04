@@ -4,6 +4,13 @@ import React, { useState } from 'react';
 import { cn } from '@/src/lib/utils';
 import { Input } from '@/src/components/ui/input';
 import { Button } from '@/src/components/ui/button';
+import { Mail } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/src/components/ui/card';
 
 interface FooterNewsletterProps {
   className?: string;
@@ -42,34 +49,50 @@ export function FooterNewsletter({ className }: FooterNewsletterProps) {
   };
 
   return (
-    <div className={cn('space-y-3', className)}>
-      <h4 className="text-sm font-medium text-foreground">Newsletter</h4>
-      <p className="text-sm text-muted-foreground max-w-xs">
-        Inscrivez-vous à notre newsletter pour recevoir nos actualités et offres spéciales.
-      </p>
-      
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
-        <Input
-          type="email"
-          placeholder="Votre email"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-          className="min-w-[200px]"
-          required
-        />
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Envoi...' : 'S\'inscrire'}
-        </Button>
-      </form>
-      
-      {message && (
-        <p className={cn(
-          'text-sm mt-2',
-          message.type === 'success' ? 'text-green-600' : 'text-red-600'
-        )}>
-          {message.text}
-        </p>
-      )}
+    <div className={cn('space-y-4', className)}>
+      <Card className="bg-card/50 border border-border/50 shadow-sm">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium flex items-center space-x-2">
+            <Mail className="h-4 w-4 text-accent" />
+            <span>Restez informé</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-4">
+            Astuces, nouveautés et offres exclusives directement dans votre boîte mail.
+          </p>
+          
+          <form onSubmit={handleSubmit} className="space-y-2">
+            <div className="relative">
+              <Input
+                type="email"
+                placeholder="Votre email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pr-24 border-border/50 focus:border-accent bg-background/80"
+                required
+              />
+              <Button 
+                type="submit" 
+                size="sm"
+                disabled={isSubmitting}
+                className="absolute right-1 top-1 h-8"
+              >
+                {isSubmitting ? 'Envoi...' : 'S\'inscrire'}
+              </Button>
+            </div>
+            
+            {message && (
+              <p className={cn(
+                'text-sm mt-2 animate-in fade-in slide-in-from-bottom-2',
+                message.type === 'success' ? 'text-green-600' : 'text-red-600'
+              )}>
+                {message.text}
+              </p>
+            )}
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -1,97 +1,524 @@
-1. General Code Style & Formatting
-Style Guide: Follow the Airbnb Style Guide for consistent code formatting.
-
-Naming Conventions: Use PascalCase for React component file names (e.g., UserCard.tsx instead of user-card.tsx).
-
-Exports: Prefer named exports for components to promote clarity.
-
-Environment Creation: Separate configurations and code paths must be maintained for both production and development environments.
-
-2. Project Structure & Architecture
-Next.js Patterns: Use Next.js with the App Router and correctly differentiate between server and client components.
-
-Backend Integration: Maintain Supabase as the backend with an Express.js intermediary for authentication.
-
-Code Organization:
-
-Components: Place reusable components under src/components/
-
-Contexts: Manage global state with React Context API in src/contexts/
-
-Services: Centralize API and data fetching logic under src/services/api/
-
-Styles: Keep Tailwind CSS as the primary styling solution, and extend with custom styles only with prior approval.
-
-File/Folder Creation: New files or directories should only be created after obtaining user approval.
-
-3. Styling & UI
-Tailwind CSS: Use Tailwind CSS for all styling. Avoid unnecessary custom CSS files unless absolutely required.
-
-UI Libraries: Use Shadcn UI for pre-built components.
-
-Semantic Markup: Minimize excessive <div> nesting. Use semantic HTML5 elements wherever possible.
-
-Responsive Design: Ensure all components are responsive and accessible.
-
-4. Data Fetching & Forms
-Data Fetching: Use TanStack Query (react-query) for robust and efficient data fetching.
-
-Form Handling: Use React Hook Form for handling forms.
-
-Validation: Use Zod for schema validation to ensure data integrity.
-
-5. State Management & Logic
-React Context: Use React Context API to manage shared state (e.g., authentication, admin mode).
-
-Compound Components: Where applicable, implement compound components to keep related UI parts together while sharing state.
-
-Custom Hooks: Encapsulate business logic and data fetching in custom hooks (e.g., useAdminActions, usePermissions).
-
-6. Backend & Database
-Database Access: Use Prisma for interacting with the Supabase PostgreSQL database.
-
-Data Conversion: Centralize conversion functions between camelCase (frontend) and snake_case (database) in utilities.
-
-Security Policies: Ensure robust Row Level Security (RLS) policies are in place on Supabase.
-
-7. Security & Performance
-Authentication: Use an Express.js intermediary to securely manage authentication with Supabase Auth.
-
-Cookies: Utilize HTTP-only cookies for authentication tokens.
-
-Rate Limiting & Helmet: Implement express-rate-limit and helmet on the backend for enhanced security.
-
-Performance Optimization:
-
-Optimize asset loading with lazy loading, image optimization, and code splitting.
-
-Use caching where applicable.
-
-Error Handling: Centralize error logging using tools like Winston on the backend and Error Boundaries on the frontend.
-
-8. Testing & Quality Assurance
-Unit & Integration Testing: Implement tests using Jest and Testing Library for critical functionality.
-
-Linting & Formatting: Use ESLint and Prettier to maintain code quality and consistency.
-
-CI/CD: Set up continuous integration and deployment pipelines to automate testing and deployment.
-
-9. Accessibility & SEO
-Accessibility: Follow WCAG guidelines; ensure all pages use semantic HTML.
-
-SEO: Ensure code is SEO-friendly by using proper meta tags, structured data, and server-side rendering when possible.
-
-10. Iterative Development Process
-User Approval for Changes:
-
-When the user types "go" in the chat, it indicates full approval for the complete development of the proposed changes.
-
-When the user types "go slowly," it means the changes should be broken down into logical steps, with user validation at each stage.
-
-No Unilateral Changes: The user’s approval is only valid for the current validated proposals. Any new development suggestions must be approved by the user before implementation.
-
-Production & Development Environment Setup
-Production Environment: Configure environment variables, secure cookies, and proper logging. Deploy the Next.js frontend (on Vercel or Netlify) and the Express.js authentication server (on Render) with separate configurations.
-
-Development Environment: Use local environment variables for testing and development. Ensure the code path for development is isolated from production, using tools like env-cmd for different configurations.
-
+{
+  "projectName": "inHerbisVeritas",
+  "codeStyle": {
+    "styleGuide": "airbnb",
+    "naming": {
+      "components": "PascalCase",
+      "functions": "camelCase",
+      "variables": "camelCase",
+      "constants": "UPPER_SNAKE_CASE"
+    },
+    "exports": {
+      "preferNamed": true,
+      "defaultComponentName": "sameAsFile",
+      "noDefaultExports": true,
+      "noModifiedExports": true
+    },
+    "formatting": {
+      "useESLint": true,
+      "usePrettier": true
+    }
+  },
+  "architecture": {
+    "framework": {
+      "name": "nextjs",
+      "version": "latest",
+      "appRouter": true,
+      "componentTypes": {
+        "enforceServerClientSeparation": true,
+        "markInteractiveComponentsAsClient": true,
+        "avoidDottingIntoClientModulesFromServer": true,
+        "useClientLayoutForInteractiveComponents": true
+      }
+    },
+    "refactoringRoadmap": {
+      "enabled": true,
+      "progressive": true,
+      "steps": [
+        {
+          "name": "centralizeDesignSystem",
+          "description": "Centraliser le design system et les styles communs",
+          "priority": 1,
+          "complete": false
+        },
+        {
+          "name": "refactorCardComponents",
+          "description": "Refactoriser les composants de carte (Card)",
+          "priority": 2,
+          "complete": false
+        },
+        {
+          "name": "refactorPageSections",
+          "description": "Refactoriser les sections de page",
+          "priority": 3,
+          "complete": false
+        },
+        {
+          "name": "refactorFooter",
+          "description": "Refactoriser le Footer",
+          "priority": 4,
+          "complete": true
+        },
+        {
+          "name": "refactorHeader",
+          "description": "Refactoriser le Header/NavBar",
+          "priority": 5,
+          "complete": true
+        }
+      ]
+    },
+    "componentStructure": {
+  "primitives": {
+    "directory": "src/components/primitives",
+    "components": [
+      "Button",
+      "Input",
+      "Select",
+      "Card",
+      "Text",
+      "Heading",
+      "Icon"
+    ]
+  },
+  "compound": {
+    "directory": "src/components/shared",
+    "components": [
+      {
+        "name": "Card",
+        "description": "Affichage structuré des plantes et contenus",
+        "subComponents": [
+          "Card.Image",
+          "Card.Header",
+          "Card.Title",
+          "Card.Subtitle",
+          "Card.Body",
+          "Card.Footer"
+        ],
+        "priority": "high"
+      },
+      {
+        "name": "Tabs",
+        "description": "Navigation entre différentes catégories d'informations",
+        "subComponents": [
+          "Tabs.List",
+          "Tabs.Trigger",
+          "Tabs.Content"
+        ],
+        "priority": "high"
+      },
+      {
+        "name": "Section",
+        "description": "Structure des sections de page",
+        "subComponents": [
+          "Section.Header", 
+          "Section.Title",
+          "Section.Description",
+          "Section.Content",
+          "Section.Footer"
+        ],
+        "priority": "high"
+      },
+      {
+        "name": "PropertyTags",
+        "description": "Affichage des propriétés des plantes sous forme de tags",
+        "subComponents": [
+          "PropertyTags.Tag",
+          "PropertyTags.Group"
+        ],
+        "priority": "medium"
+      }
+    ]
+  },
+  "layout": {
+    "directory": "src/components/layout",
+    "components": [
+      "Bar",
+      "Footer",
+      "Navbar",
+      "Section",
+      "Container",
+      "Grid"
+    ]
+  },
+  "domain": {
+    "directory": "src/components/domain",
+    "components": [
+      "PlantCard",
+      "HerbDetails",
+      "PropertyTag",
+      "UsageInstructions",
+      "SearchFilter",
+      "CategoryNavigation"
+    ]
+  }
+},
+    "designSystem": {
+      "enabled": true,
+      "enforceTokens": true,
+      "isolateIcons": true,
+      "enforceCompoundComponents": true,
+      "colorTokenArchitecture": {
+        "approach": "layered",
+        "layers": [
+          {
+            "name": "core",
+            "description": "Valeurs HSL et RGB fondamentales",
+            "formatting": "hsl",
+            "path": "src/styles/tokens/core.ts"
+          },
+          {
+            "name": "primitives",
+            "description": "Palette de base avec nommage neutre (neutral-100, primary-500, etc.)",
+            "naming": "color-scale",
+            "variablePrefix": "color",
+            "path": "src/styles/tokens/primitives.ts"
+          },
+          {
+            "name": "semantic",
+            "description": "Mapping fonctionnel des primitives (background, text, border, etc.)",
+            "naming": "functional",
+            "variablePrefix": "semantic",
+            "path": "src/styles/tokens/semantic.ts"
+          },
+          {
+            "name": "component",
+            "description": "Tokens spécifiques aux composants (button, card, navbar, etc.)",
+            "naming": "component-property",
+            "variablePrefix": "component",
+            "path": "src/styles/tokens/components.ts"
+          }
+        ],
+        "cssVariablesGeneration": {
+          "enforceLayerOrder": true,
+          "singleOutput": true,
+          "outputPath": "src/styles/system/variables.css",
+          "format": "css-variables"
+        }
+      },
+      "tailwindIntegration": {
+        "enforceDirectVariableUsage": true,
+        "pluginApproach": true,
+        "avoidExtendingColors": true,
+        "cssVariablesInTheme": true,
+        "importLayerFromTailwind": true,
+        "preferThemeFunction": true,
+        "safelistCriticalClasses": true,
+        "colorUtilities": {
+          "generateFromTokens": true,
+          "strictThemeMapping": true,
+          "enforceConsistency": true,
+          "avoidClassDirectives": true
+        },
+        "configStructure": {
+          "separatePluginFile": true,
+          "pluginPath": "src/styles/utilities/tailwind-plugin.js",
+          "setupPath": "tailwind.config.js"
+        }
+      },
+      "componentStyling": {
+        "preferClassNameProps": true,
+        "avoidInlineStyles": true,
+        "controlFlowPattern": "css-variables-to-classnames",
+        "variantImplementation": "data-attributes",
+        "composeClassesWithUtils": true,
+        "useClassName": true,
+        "enforceTokenConsumption": true,
+        "prohibitHardcodedValues": true,
+        "validateContrastRatios": true
+      },
+      "themingSupport": {
+        "darkMode": "class",
+        "themeToggle": true,
+        "mediaQueryFallback": true,
+        "preferSystemDefault": true,
+        "persistThemePreference": true,
+        "validateContrastInDarkMode": true
+      },
+      "compoundComponentsPatterns": {
+        "requireDedicatedClientFile": true,
+        "avoidCompositionInIndexFiles": true,
+        "explicitTyping": true,
+        "fileStructure": {
+          "baseComponent": "ComponentName.tsx",
+          "subComponents": "ComponentNameSubcomponent.tsx",
+          "context": "ComponentNameContext.tsx",
+          "composedComponent": "ComposedComponentName.tsx",
+          "index": "index.ts"
+        },
+        "implementation": {
+          "useContextForSharing": true,
+          "allowChildrenComposition": true,
+          "enforceAccessibility": true,
+          "responsiveDesign": true,
+          "enableVariants": true
+        },
+        "bestPractices": {
+          "fixedHeight": true,
+          "useFlexForAlignment": true,
+          "isolateInteractiveLogic": true,
+          "separatePresentation": true,
+          "enforceSemanticMarkup": true
+        }
+      },
+      "dependencyManagement": {
+        "avoidCircularDependencies": true,
+        "isolateContextsAndHooks": true,
+        "avoidBidirectionalImports": true,
+        "separationOfConcerns": true,
+        "useModuleBoundaries": true,
+        "recommendedImportStructure": {
+          "composedComponentImports": ["base", "subcomponents"],
+          "baseComponentImports": ["context"],
+          "subcomponentImports": ["context"],
+          "indexImports": ["all"]
+        }
+      },
+      "colorTokens": {
+        "calcaire": "#F2F2EF",
+        "bleuMed": "#4A90E2",
+        "oliveVert": "#808F4D",
+        "ocre": "#D98E04",
+        "lavande": "#A58FAA"
+      },
+      "structure": {
+        "tokensDirectory": "src/styles/tokens",
+        "themeDirectory": "src/styles/theme",
+        "systemDirectory": "src/styles/system",
+        "utilitiesDirectory": "src/styles/utilities",
+        "componentsTheme": "src/styles/theme/components.ts",
+        "themeTokensStructure": {
+          "semantic": true,
+          "functional": true,
+          "avoidVisualNames": true
+        },
+        "cssImports": {
+          "enforceOrder": true,
+          "importSequence": [
+            "variables.css",
+            "base.css",
+            "components.css",
+            "utilities.css"
+          ]
+        }
+      },
+      "validation": {
+        "enforceConsistency": true,
+        "lintColorTokens": true,
+        "detectUnusedTokens": true,
+        "detectHardcodedValues": true,
+        "testColorContrast": true,
+        "visualRegressionTesting": true
+      }
+    },
+    "directories": {
+      "components": "src/components",
+      "primitives": "src/components/primitives",
+      "shared": "src/components/shared",
+      "contexts": "src/contexts",
+      "services": "src/services/api",
+      "hooks": "src/hooks",
+      "utils": "src/utils",
+      "styles": "src/styles",
+      "icons": "src/components/icons",
+      "layouts": "src/components/layout"
+    },
+    "requireApproval": {
+      "newDirectories": true,
+      "newFiles": true,
+      "extensionsToCustomCSS": true
+    }
+  },
+  "styling": {
+    "primary": "tailwindcss",
+    "uiLibraries": ["shadcn-ui"],
+    "cssStrategy": {
+      "preferUtilityClasses": true,
+      "componentStyles": "composition",
+      "cssVariables": "native",
+      "scopingStrategy": "attributes",
+      "avoidCssModules": true,
+      "avoidGlobalStyles": true,
+      "enforceClassOrdering": true,
+      "enforceSpecificity": "low"
+    },
+    "tailwindConfig": {
+      "customizePlugins": true,
+      "extendableTheme": true,
+      "strictMode": true,
+      "preferArbitraryProperties": false,
+      "purgeStrategy": "content-based",
+      "safelistCriticalClasses": true,
+      "limitAtomicClasses": true,
+      "enforceClassGrouping": true,
+      "configAsCode": true
+    },
+    "markup": {
+      "preferSemanticHTML": true,
+      "minimizeDivNesting": true
+    },
+    "responsive": {
+      "enforced": true,
+      "mobileLast": false,
+      "componentApproach": "responsive-props",
+      "preferFlexAndGrid": true,
+      "avoidFixedUnits": true,
+      "testAllBreakpoints": true
+    },
+    "accessibility": {
+      "wcagLevel": "2.1",
+      "enforceAriaLabels": true,
+      "enforceAltText": true,
+      "semanticStructure": true,
+      "keyboardNavigation": true,
+      "colorContrast": true,
+      "enforceMinimumFontSize": true,
+      "testWithScreenReaders": true,
+      "enforceMotionSafety": true,
+      "enforceReducedMotion": true
+    }
+  },
+  "internationalization": {
+    "library": "next-intl",
+    "defaultLocale": "fr",
+    "supportedLocales": ["fr", "en"],
+    "structure": {
+      "messagesDirectory": "src/messages",
+      "formatMessagesBy": "module",
+      "routing": "subpath"
+    },
+    "features": {
+      "localeDetection": true, 
+      "localeStorage": "cookie",
+      "numberFormatting": true,
+      "dateFormatting": true,
+      "pluralization": true
+    },
+    "integration": {
+      "withValidation": true,
+      "withForms": true,
+      "withMetadata": true,
+      "withSEO": true
+    },
+    "bestPractices": {
+      "avoidStringConcatenation": true,
+      "useTypeSafeTranslations": true,
+      "documentMissingTranslations": true,
+      "preferInterpolation": true,
+      "validateAllLocales": true
+    },
+    "dynamicContent": {
+      "loadByChunk": true,
+      "cacheTranslations": true,
+      "optimizeForFirstLoad": true
+    }
+  },
+  "dataManagement": {
+    "fetching": {
+      "library": "tanstack-query",
+      "centralize": true
+    },
+    "forms": {
+      "library": "react-hook-form",
+      "validation": "zod"
+    },
+    "state": {
+      "global": "react-context",
+      "local": "react-hooks",
+      "compoundComponents": true
+    },
+    "backend": {
+      "primary": "supabase",
+      "orm": "prisma",
+      "auth": {
+        "service": "express-js",
+        "cookies": {
+          "httpOnly": true,
+          "secure": true
+        }
+      },
+      "security": {
+        "rls": true,
+        "rateLimiting": true,
+        "useHelmet": true
+      },
+      "dataConversion": {
+        "centralizeConverters": true,
+        "frontendFormat": "camelCase",
+        "backendFormat": "snake_case"
+      }
+    }
+  },
+  "performance": {
+    "optimizations": {
+      "lazyLoading": true,
+      "imageOptimization": true,
+      "codeSplitting": true,
+      "caching": true
+    },
+    "errorHandling": {
+      "frontend": "error-boundaries",
+      "backend": "winston"
+    }
+  },
+  "quality": {
+    "testing": {
+      "framework": "jest",
+      "library": "testing-library",
+      "coverage": 80,
+      "componentTesting": {
+        "isolateSubcomponents": true,
+        "testComposedComponents": true,
+        "enforceAccessibility": true
+      },
+      "visualTesting": {
+        "enforceDesignTokens": true,
+        "snapshotComponents": true,
+        "testColorContrast": true,
+        "testResponsiveness": true
+      }
+    },
+    "linting": {
+      "enforceTypeScript": true,
+      "noInlineSvg": true,
+      "noUnusedVars": true,
+      "noConsole": true,
+      "checkCircularDeps": true,
+      "enforceDesignTokenUsage": true,
+      "detectHardcodedColors": true,
+      "enforceImportOrder": true
+    },
+    "cicd": {
+      "enabled": true,
+      "runTestsBeforePush": true
+    }
+  },
+  "seo": {
+    "metaTags": true,
+    "structuredData": true,
+    "ssr": true
+  },
+  "development": {
+    "approvalCommands": {
+      "completeApproval": "go",
+      "stepByStepApproval": "go slowly",
+      "updateDocumentation": "doc",
+      "prepareCommit": "commit"
+    },
+    "environments": {
+      "production": {
+        "frontend": {
+          "platform": "vercel",
+          "environment": "production"
+        },
+        "auth": {
+          "platform": "render",
+          "environment": "production"
+        }
+      },
+      "development": {
+        "useEnvCmd": true,
+        "isolateCodePaths": true
+      }
+    }
+  }
+}

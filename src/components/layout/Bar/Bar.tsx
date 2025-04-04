@@ -26,15 +26,17 @@ export const Bar: BarComponentType = ({
   variant = 'primary',
   className = '',
 }: BarProps) => {
+  // Détermine les classes de base en fonction de la position et de la variante
+  const baseClasses = "w-full flex items-center justify-between";
+  
+  // Les classes fournies par l'appelant (comme bg-navigation ou bg-footer) ont priorité
+  const combinedClasses = `${baseClasses} ${className}`;
+  
   return (
     <BarContext.Provider value={{ position, variant }}>
       <header 
-        className={`
-          w-full flex items-center justify-between
-          ${position === 'top' ? 'py-4' : 'py-6'}
-          ${variant === 'primary' ? 'bg-background text-foreground' : 'bg-accent text-accent-foreground'}
-          ${className}
-        `}
+        className={combinedClasses}
+        style={{ backgroundColor: position === 'top' ? 'var(--navigation)' : 'var(--footer)' }}
       >
         <div className="container mx-auto flex items-center justify-between">
           {children}
@@ -43,5 +45,3 @@ export const Bar: BarComponentType = ({
     </BarContext.Provider>
   );
 };
-
-// Nous ajouterons les sous-composants après leur import dans le fichier index

@@ -16,7 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     <Bar 
       position="top" 
       variant="primary" 
-      className={`sticky top-0 z-50 border-b border-border shadow-sm ${className}`}
+      className={`sticky top-0 z-50 border-b border-border shadow-sm py-4 bg-navigation text-navigation-foreground ${className}`}
     >
       {children}
     </Bar>

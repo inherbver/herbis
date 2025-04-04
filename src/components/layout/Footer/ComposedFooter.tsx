@@ -1,34 +1,41 @@
 'use client';
 
 import React from 'react';
+import { Container } from '@/src/components/ui/container';
 import { Footer } from './Footer';
 import { FooterBrand } from './FooterBrand';
 import { FooterLinks } from './FooterLinks';
-import { FooterLegal } from './FooterLegal';
 import { FooterNewsletter } from './FooterNewsletter';
 import { FooterSocial } from './FooterSocial';
+import { FooterLegal } from './FooterLegal';
+import { Separator } from '@/src/components/ui/separator';
 
 export function ComposedFooter() {
   return (
     <Footer>
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-4">
-          <div className="lg:col-span-3">
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Branding & Description */}
+          <div className="lg:col-span-4">
             <FooterBrand />
           </div>
-          <div className="lg:col-span-6">
+          
+          {/* Links */}
+          <div className="lg:col-span-4">
             <FooterLinks />
           </div>
-          <div className="lg:col-span-3 space-y-8">
+          
+          {/* Newsletter & Social */}
+          <div className="lg:col-span-4 space-y-8">
             <FooterNewsletter />
             <FooterSocial />
           </div>
         </div>
         
-        <div className="border-t border-border mt-8 pt-4">
-          <FooterLegal />
-        </div>
-      </div>
+        <Separator className="my-8 opacity-30" />
+        
+        <FooterLegal />
+      </Container>
     </Footer>
   );
 }
